@@ -314,10 +314,27 @@ def download_report(run_id: str, report_type: str):
 
 
 # Serve frontend build if dist directory exists (e.g. for Render or unified deployment)
-FRONTEND_DIST = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
+FRONTEND_DIST = os.environ.get(
+    "FRONTEND_DIST_DIR",
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")),
 )
-if os.path.exists(FRONTEND_DIST):
+if not os.path.exists(FRONTEND_DIST):
+    alt_dist = os.path.abspath(os.path.join(os.path.dirname(__file__), "dist"))
+    if os.path.exists(alt_dist):
+        FRONTEND_DIST = alt_dist
+
+if os.path.exists(FRONTEND_DIST) and os.path.exists(os.path.join(FRONTEND_DIST, "index.html")):
     app.mount("/", StaticFiles(directory=FRONTEND_DIST, html=True), name="static")
+else:
+    @app.get("/")
+    def root():
+        return {
+            "status": "online",
+            "service": "Q-TRANSIT Backend API",
+            "health_check": "/api/health",
+            "docs": "/docs",
+            "problem_id": "UC-053",
+            "team": "HYPERQUBITS",
+        }
 
 

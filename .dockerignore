@@ -1,0 +1,10 @@
+.git
+.pytest_cache
+node_modules
+q-transit/frontend/node_modules
+q-transit/frontend/dist
+q-transit/backend/__pycache__
+q-transit/backend/runs
+*.pyc
+*.pyo
+.env

@@ -4,7 +4,22 @@ import {
   SimulationRunResult,
 } from '../types';
 
-const API_BASE = '/api';
+function getApiBase(): string {
+  const envVal = import.meta.env.VITE_API_BASE;
+  if (!envVal || envVal.trim() === '') {
+    return '/api';
+  }
+  let base = envVal.trim();
+  if (!base.startsWith('http://') && !base.startsWith('https://') && !base.startsWith('/')) {
+    base = `https://${base}`;
+  }
+  if (base.startsWith('http') && !base.endsWith('/api') && !base.endsWith('/api/')) {
+    base = `${base.replace(/\/+$/, '')}/api`;
+  }
+  return base.replace(/\/+$/, '');
+}
+
+export const API_BASE = getApiBase();
 
 export async function fetchHealth(): Promise<{ status: string; service: string }> {
   const res = await fetch(`${API_BASE}/health`);
