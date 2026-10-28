@@ -1,0 +1,8 @@
+trip_id,route_id,start_min,duration_min,passenger_demand,priority,operating_cost
+T001,R1,480,30,42,1.0,500
+T002,R2,480,40,35,1.2,600
+T003,R3,495,25,22,0.8,350
+T004,R1,540,30,28,1.0,500
+T005,R2,540,40,38,1.2,600
+T006,R3,540,25,18,0.8,350
+

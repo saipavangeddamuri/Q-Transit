@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: q-transit
+    runtime: python
+    region: oregon
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT --app-dir q-transit/backend"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: NODE_VERSION
+        value: 20.12.0

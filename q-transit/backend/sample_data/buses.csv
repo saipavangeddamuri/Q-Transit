@@ -1,0 +1,5 @@
+bus_id,capacity,available_from_min,available_to_min
+B001,50,420,720
+B002,40,420,720
+B003,30,420,720
+
